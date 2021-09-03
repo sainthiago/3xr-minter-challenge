@@ -9,6 +9,8 @@ For community customization:
 2) Create custom proposal on VR DAO (via Spunik DAO) with args (JSON).
 3) R3F (React-Three-Fiber) component that renders minted NFT.
 
+(https://airtable.com/shrdNEynK25TGJ91h/tblTtriXzrEiCfpoy/viwGhGQTKiJ4L5JSG/reclVS283pX4YXEzs)
+
 -------------
 ## Addresses
 - DAO: vr-challenge.sputnikv2.testnet
