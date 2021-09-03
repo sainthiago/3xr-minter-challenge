@@ -18,6 +18,8 @@ For community customization:
 ## Useful links
 
 Create your own NFT minter @ Mintbase - https://www.youtube.com/watch?v=0HBIGcAARP8&t=1091s&ab_channel=NEAR
+
 Mintbase developers - https://www.mintbase.io/pt/developers
+
 GraphiQL - https://graphiql-online.com/ - w/ mintbase link: https://mintbase-mainnet.hasura.app/v1/graphql
 
