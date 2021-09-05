@@ -2,7 +2,7 @@ import { useLazyQuery } from "@apollo/client";
 import { gql } from "apollo-boost";
 import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import SelectedNFTs from "./SelectedNFTs";
 
 const SEARCH_VALUE = gql`
@@ -44,7 +44,7 @@ const SearchBar = () => {
     formState: { errors },
     setValue,
     getValues,
-  } = useForm();
+  } = useFormContext();
 
   const [
     searchByValue,
@@ -104,17 +104,14 @@ const SearchBar = () => {
 
   return (
     <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-        Search
-      </label>
       <input
         {...register("searchKey")}
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="shadow appearance-none border-2 border-smoothPrimary rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline focus:text-gray-100 focus:border-accent bg-primary h-12"
         placeholder="Search NFT"
         onChange={debounce((event) => handleSearch(event), 500)}
       />
       {errors.nfts && nfts.length < 1 && (
-        <p className="text-red-500 text-xs italic">
+        <p className="text-accent text-xs mt-2">
           Please select at least one nft.
         </p>
       )}
@@ -125,8 +122,8 @@ const SearchBar = () => {
               <div
                 key={elm.id}
                 onClick={() => handleSelectedValue(elm)}
-                className={`flex justify-between cursor-pointer py-2 px-3 hover:bg-indigo-200 ${
-                  checkIfElementIsSelected(elm) ? "bg-indigo-200" : ""
+                className={`flex justify-between cursor-pointer py-2 px-3 hover:bg-accent ${
+                  checkIfElementIsSelected(elm) ? "bg-accent" : ""
                 }
                     `}
               >
@@ -136,16 +133,16 @@ const SearchBar = () => {
                     src={elm.media}
                     alt={elm.title}
                   />
-                  <p className="pt-3 pb-3">{elm.title}</p>
+                  <p className="pt-3 pb-3 text-white">{elm.title}</p>
                 </div>
                 <div className="flex items-center">
-                  <p className="float-right">{getTypeFlag(elm)}</p>
+                  <p className="float-right text-white">{getTypeFlag(elm)}</p>
                 </div>
               </div>
             ))
           ) : (
             <div className="z-10 py-2 px-3 ">
-              <p className="pt-3 pb-3 text-gray-700">
+              <p className="pt-3 pb-3 text-white">
                 No nfts were found. Please try with another keyword.
               </p>
             </div>
