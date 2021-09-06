@@ -60,7 +60,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
           <Stepper currentStep={currentStep} />
 
           <div className="w-40 flex justify-end">
-            {currentStep.id !== "2" && (
+            {currentStep.id !== "3" && (
               <button
                 className="inline-block no-underline text-white text-sm py-2 px-3 hover:bg-gray-500 rounded"
                 disabled={!currentStep.nextStep}

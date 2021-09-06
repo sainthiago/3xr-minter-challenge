@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import GalleryBasicInfo from "../../components/Form/Steps/GalleryBasicInfo";
 import GalleryDetails from "../../components/Form/Steps/GalleryDetails";
+import GalleryPreview from "../../components/Form/Steps/GalleryPreview";
 import Header from "../../components/Header";
 
 const steps = [
@@ -18,6 +19,13 @@ const steps = [
     title: "Details",
     formComponent: <GalleryDetails />,
   },
+  {
+    id: "3",
+    nextStep: "4",
+    previousStep: "2",
+    title: "Preview",
+    formComponent: <GalleryPreview />,
+  },
 ] as {
   nextStep: string | null;
   previousStep: string | null;
@@ -32,8 +40,6 @@ const Home = () => {
   const { step: stepId } = router.query as { step: string };
 
   if (!stepId) return null;
-
-  const currentStep = steps.find((step) => step.id === stepId);
 
   return (
     <div className="bg-primary min-h-screen">
