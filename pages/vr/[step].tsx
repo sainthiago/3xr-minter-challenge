@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import GalleryBasicInfo from "../../components/Form/Steps/GalleryBasicInfo";
 import GalleryDetails from "../../components/Form/Steps/GalleryDetails";
 import GalleryPreview from "../../components/Form/Steps/GalleryPreview";
+import GallerySummary from "../../components/Form/Steps/GallerySummary";
 import Header from "../../components/Header";
 
 const steps = [
@@ -25,6 +26,13 @@ const steps = [
     previousStep: "2",
     title: "Preview",
     formComponent: <GalleryPreview />,
+  },
+  {
+    id: "4",
+    nextStep: null,
+    previousStep: "3",
+    title: "Summary",
+    formComponent: <GallerySummary />,
   },
 ] as {
   nextStep: string | null;

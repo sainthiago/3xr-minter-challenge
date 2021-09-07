@@ -1,6 +1,6 @@
 const ProgressBar = ({ stepId }) => {
   const getStepWidth = (): string => {
-    return `${(Number(stepId) / 3) * 100}%`;
+    return `${(Number(stepId) / 4) * 100}%`;
   };
   return (
     <>
