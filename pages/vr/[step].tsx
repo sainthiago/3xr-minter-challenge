@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import GalleryBasicInfo from "../../components/Form/Steps/GalleryBasicInfo";
 import GalleryDetails from "../../components/Form/Steps/GalleryDetails";
+import GalleryNFTs from "../../components/Form/Steps/GalleryNFTs";
 import GalleryPreview from "../../components/Form/Steps/GalleryPreview";
 import GallerySummary from "../../components/Form/Steps/GallerySummary";
 import Header from "../../components/Header";
@@ -10,27 +11,34 @@ const steps = [
     id: "1",
     nextStep: "2",
     previousStep: null,
-    title: "Basic Info",
-    formComponent: <GalleryBasicInfo />,
+    title: "NFTs",
+    formComponent: <GalleryNFTs />,
   },
   {
     id: "2",
     nextStep: "3",
     previousStep: "1",
-    title: "Details",
-    formComponent: <GalleryDetails />,
+    title: "Basic Info",
+    formComponent: <GalleryBasicInfo />,
   },
   {
     id: "3",
     nextStep: "4",
     previousStep: "2",
+    title: "Details",
+    formComponent: <GalleryDetails />,
+  },
+  {
+    id: "4",
+    nextStep: "5",
+    previousStep: "3",
     title: "Preview",
     formComponent: <GalleryPreview />,
   },
   {
-    id: "4",
+    id: "5",
     nextStep: null,
-    previousStep: "3",
+    previousStep: "4",
     title: "Summary",
     formComponent: <GallerySummary />,
   },
@@ -41,7 +49,6 @@ const steps = [
   id: string;
   formComponent: JSX.Element | null;
 }[];
-
 const Home = () => {
   const router = useRouter();
 
