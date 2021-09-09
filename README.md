@@ -25,3 +25,4 @@ Mintbase developers - https://www.mintbase.io/pt/developers
 
 GraphiQL - https://graphiql-online.com/ - w/ mintbase link: https://mintbase-mainnet.hasura.app/v1/graphql
 
+3D gallery template that i chose for my solution: https://hubs.mozilla.com/spoke/projects/new?sceneId=CzmA8a0
