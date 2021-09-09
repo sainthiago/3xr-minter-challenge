@@ -3,15 +3,24 @@ import { gql } from "apollo-boost";
 import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import SearchResult from "./SearchResult";
 import SelectedNFTs from "./SelectedNFTs";
 
 const SEARCH_VALUE = gql`
   query Search($value: String!) {
     metadata(
       where: {
-        _or: [{ description: { _like: $value } }, { title: { _like: $value } }]
+        _or: [
+          { animation_type: { _like: $value } }
+          { media_type: { _like: $value } }
+          { description: { _like: $value } }
+          { title: { _like: $value } }
+          { thing: { tokens: { minter: { _like: $value } } } }
+          { thing: { memo: { _like: $value } } }
+        ]
       }
       limit: 10
+      order_by: { thing: { createdAt: desc } }
     ) {
       id
       title
@@ -38,6 +47,7 @@ const SEARCH_VALUE = gql`
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
   const [nfts, setNfts] = useState<any>([]);
+  const [showLimit, setShowLimit] = useState<boolean>(false);
 
   const {
     register,
@@ -74,32 +84,12 @@ const SearchBar = () => {
         setValue("nfts", [...nfts, elm]);
       }
     } else {
-      console.log("Only can choose 20 nfts");
+      setShowLimit(true);
     }
   };
 
   const checkIfElementIsSelected = (elm) => {
     return nfts.find((val) => val.id === elm.id);
-  };
-
-  const getElmByType = (type: string): string => {
-    if (type.includes("audio")) {
-      return "Audio";
-    } else if (type.includes("video")) {
-      return "Video";
-    } else if (type.includes("application")) {
-      return "Application";
-    } else {
-      return "Model";
-    }
-  };
-
-  const getTypeFlag = (elm): string => {
-    if (elm.animation_type) {
-      return getElmByType(elm.animation_type);
-    } else {
-      return "Image";
-    }
   };
 
   return (
@@ -118,27 +108,13 @@ const SearchBar = () => {
       {searchResult && (
         <div className="relative z-10 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-h-52 overflow-auto">
           {searchResult.metadata.length > 0 ? (
-            searchResult.metadata.map((elm) => (
-              <div
-                key={elm.id}
-                onClick={() => handleSelectedValue(elm)}
-                className={`flex justify-between cursor-pointer py-2 px-3 hover:bg-accent ${
-                  checkIfElementIsSelected(elm) ? "bg-accent" : ""
-                }
-                    `}
-              >
-                <div className="flex">
-                  <img
-                    className="w-10 h-10 rounded mr-4 object-cover"
-                    src={elm.media}
-                    alt={elm.title}
-                  />
-                  <p className="pt-3 pb-3 text-white">{elm.title}</p>
-                </div>
-                <div className="flex items-center">
-                  <p className="float-right text-white">{getTypeFlag(elm)}</p>
-                </div>
-              </div>
+            searchResult.metadata.map((nft) => (
+              <SearchResult
+                nft={nft}
+                key={nft.id}
+                checkIfElementIsSelected={checkIfElementIsSelected}
+                handleSelectedValue={handleSelectedValue}
+              ></SearchResult>
             ))
           ) : (
             <div className="z-10 py-2 px-3 ">
@@ -149,11 +125,15 @@ const SearchBar = () => {
           )}
         </div>
       )}
-      <SelectedNFTs
-        setSearchResult={setSearchResult}
-        nfts={nfts}
-        setNfts={setNfts}
-      ></SelectedNFTs>
+      <div className="mt-4">
+        <SelectedNFTs
+          setSearchResult={setSearchResult}
+          nfts={nfts}
+          setNfts={setNfts}
+          showLimit={showLimit}
+          setShowLimit={setShowLimit}
+        ></SelectedNFTs>
+      </div>
     </div>
   );
 };

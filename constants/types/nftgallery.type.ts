@@ -1,3 +1,5 @@
+import { string } from "yup";
+
 export type NFTGallery = {
   imageUrl: string;
   title: string;
@@ -5,4 +7,5 @@ export type NFTGallery = {
   nfts: any[];
   amount: number;
   skyColor: string;
+  daoAddress: string;
 };
