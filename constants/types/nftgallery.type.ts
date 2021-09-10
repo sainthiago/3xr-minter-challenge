@@ -1,5 +1,3 @@
-import { string } from "yup";
-
 export type NFTGallery = {
   imageUrl: string;
   title: string;

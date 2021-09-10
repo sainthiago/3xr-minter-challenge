@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useWallet } from "../../services/providers/MintbaseWalletContext";
+import { useWallet } from "../services/providers/MintbaseWalletContext";
 
 const VR = () => {
   const { isConnected, wallet } = useWallet();

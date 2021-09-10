@@ -2,12 +2,118 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { useWallet } from "../services/providers/MintbaseWalletContext";
-import ProgressBar from "./Form/Components/ProgressBar";
-import Stepper from "./Form/Components/Stepper";
+import BN from "bn.js";
+import { Decimal } from "decimal.js";
+import { MetadataField } from "mintbase";
+import { Contract } from "near-api-js";
+import { useEffect, useState } from "react";
+import { Euler, Vector3 } from "three";
 
-const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
+import { Network, Chain } from "mintbase";
+import Stepper from "./Form/Components/Stepper";
+import ProgressBar from "./Form/Components/ProgressBar";
+
+const assetsPlaces = [
+  {
+    position: new Vector3(-5.6, 1.5, 5),
+    rotation: new Euler(0, Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(-5.6, 1.5, 3),
+    rotation: new Euler(0, Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(-5.6, 1.5, 1),
+    rotation: new Euler(0, Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(-5.6, 1.5, -1),
+    rotation: new Euler(0, Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(-5.6, 1.5, -3),
+    rotation: new Euler(0, Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(5, 1.5, 6.65),
+    rotation: new Euler(0, Math.PI, 0),
+  },
+  {
+    position: new Vector3(3, 1.5, 6.65),
+    rotation: new Euler(0, Math.PI, 0),
+  },
+  {
+    position: new Vector3(1, 1.5, 6.65),
+    rotation: new Euler(0, Math.PI, 0),
+  },
+  {
+    position: new Vector3(-1, 1.5, 6.65),
+    rotation: new Euler(0, Math.PI, 0),
+  },
+  {
+    position: new Vector3(-3, 1.5, 6.65),
+    rotation: new Euler(0, Math.PI, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, -6),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, -4),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, -2),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, 0),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, 2),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(8.3, 1.5, 0),
+    rotation: new Euler(0, -Math.PI / 2, 0),
+  },
+  {
+    position: new Vector3(-3, 1.5, -7.2),
+    rotation: new Euler(0, 0, 0),
+  },
+  {
+    position: new Vector3(-1, 1.5, -7.2),
+    rotation: new Euler(0, 0, 0),
+  },
+  {
+    position: new Vector3(2, 1.5, -7.2),
+    rotation: new Euler(0, 0, 0),
+  },
+  {
+    position: new Vector3(4, 1.5, -7.2),
+    rotation: new Euler(0, 0, 0),
+  },
+  {
+    position: new Vector3(6, 1.5, -7.2),
+    rotation: new Euler(0, 0, 0),
+  },
+];
+
+const Header = ({
+  stepId,
+  nextStep,
+  previousStep,
+  steps,
+}: {
+  stepId: string;
+  nextStep: string | null;
+  previousStep: string | null;
+  steps: any;
+}) => {
   const router = useRouter();
   const { wallet, isConnected, details } = useWallet();
+  const [isMinting, setIsMinting] = useState<boolean>(false);
 
   const defaultValues = {
     title: "",
@@ -17,6 +123,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
     nfts: [],
     galleryTemplate: "",
     skyColor: "#000000",
+    wallColor: "",
     galleryQtd: 1,
   };
 
@@ -28,7 +135,14 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
     mode: "onChange",
   });
 
-  const { trigger } = methods;
+  const { handleSubmit, reset, trigger, getValues } = methods;
+
+  const image = getValues("file");
+  const title = getValues("title");
+  const description = getValues("description");
+  const amount = getValues("galleryQtd");
+  const nfts = getValues("nfts");
+  const skyColor = getValues("skyColor");
 
   const previous = (e) => {
     e.preventDefault();
@@ -39,6 +153,177 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
     const isStepValid = await trigger();
 
     if (isStepValid) router.push(currentStep.nextStep);
+  };
+
+  const calculateRoyalties = () => {
+    let royaltiesObj = {};
+
+    nfts.forEach((nft) => {
+      const royalties = nft.thing.tokens[0].royaltys ?? [];
+      const minter = nft.thing.tokens[0].minter;
+
+      const hasRoyalties = royalties.length > 0;
+
+      if (hasRoyalties) {
+        royalties.forEach((royalty) => {
+          if (royaltiesObj[royalty.account]) {
+            royaltiesObj[royalty.account] += royalty.percent;
+          } else {
+            royaltiesObj[royalty.account] = royalty.percent;
+          }
+        });
+      } else {
+        if (royaltiesObj[minter]) {
+          royaltiesObj[minter] += 100;
+        } else {
+          royaltiesObj[minter] = 100;
+        }
+      }
+
+      const numberAccounts = Object.keys(royaltiesObj).length;
+      const percentPerAccount = (9500 / numberAccounts).toFixed(0);
+
+      Object.keys(royaltiesObj).forEach((account) => {
+        royaltiesObj[account] = Number(percentPerAccount);
+      });
+    });
+
+    const beforeCutTotal = Object.values(royaltiesObj).reduce(
+      (acc, curr) => Number(acc) + Number(curr)
+    );
+
+    royaltiesObj["vr-challenge.testnet"] = Number(
+      (10000 - beforeCutTotal).toFixed(0)
+    );
+
+    return royaltiesObj;
+  };
+
+  const createProposal = async () => {
+    setIsMinting(true);
+
+    const { data: fileUploadResult, error: fileError } =
+      await wallet.minter.uploadField(MetadataField.Media, image[0]);
+
+    if (fileError) {
+      console.error(fileError);
+      return;
+    }
+
+    const external_space = [
+      {
+        trait_type: "external_space",
+        display_type: "External Space",
+        value:
+          "https://ipfs.infura.io/ipfs/QmSvCQE52LCykoHVX6jLy3JVkgo8xa2jeGWZLsdzPiF81z",
+      },
+    ];
+    const gallery_nfts = [
+      {
+        trait_type: "gallery_nfts",
+        display_type: "NFT Gallery",
+        value: nfts.map((nft) => nft.thing.id),
+      },
+    ];
+
+    const asset_places = [
+      {
+        trait_type: "asset_places",
+        display_type: "Asset Places",
+        value: assetsPlaces,
+      },
+    ];
+
+    const colors = [
+      {
+        trait_type: "space_colors",
+        display_type: "Colors",
+        value: {
+          skyColor: skyColor,
+        },
+      },
+    ];
+
+    wallet.minter.setMetadata({
+      title: title,
+      description: description,
+      extra: [...gallery_nfts, ...external_space, ...colors, ...asset_places],
+    });
+
+    setIsMinting(false);
+
+    // wallet.mint(1, data.store, undefined, undefined, undefined)
+
+    if (!wallet.activeAccount) return;
+
+    const royalties = calculateRoyalties();
+
+    const { data: metadataId } = await wallet.minter.getMetadataId();
+
+    const mint = {
+      owner_id: details.accountId,
+      metadata: {
+        reference: metadataId,
+        extra: "custom-3xr-gallery",
+      },
+      num_to_mint: Number(amount),
+      royalty_args: {
+        split_between: royalties,
+        percentage: 1000,
+      },
+      split_owners: null,
+    };
+
+    const contract = new Contract(
+      // @ts-ignore
+      wallet.activeWallet?.account(),
+      "vr-challenge.sputnikv2.testnet",
+      {
+        viewMethods: ["get_greeting"],
+        changeMethods: ["add_proposal"],
+      }
+    );
+
+    const deposit = new Decimal(0.1);
+    const depositYokto = deposit.mul(1000000000000000000000000).toFixed();
+
+    // @ts-ignore
+    contract.add_proposal(
+      {
+        proposal: {
+          description: `Proposal to mint the "${title}" 3XR gallery
+          |
+          |
+          Preview: https://${
+            wallet?.networkName === Network.testnet ? "testnet" : "mainnet"
+          }.3xr.space/custom/${metadataId}/?preview=true
+          |
+          |
+          Gallery: https://${
+            wallet?.networkName === Network.testnet ? "testnet" : "mainnet"
+          }.3xr.space/custom/${metadataId}:vrchallenge.mintspace2.testnet`,
+          kind: {
+            FunctionCall: {
+              receiver_id: "vrchallenge.mintspace2.testnet",
+              actions: [
+                {
+                  method_name: "mint_tokens",
+                  args: Buffer.from(
+                    JSON.stringify(mint)
+                      .replaceAll('^"', "")
+                      .replaceAll('"^', "")
+                  ).toString("base64"),
+                  deposit: depositYokto,
+                  gas: "150000000000000",
+                },
+              ],
+            },
+          },
+        },
+      },
+      new BN("200000000000000"),
+      new BN("1000000000000000000000000")
+    );
   };
 
   return (
@@ -60,7 +345,14 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
           <Stepper currentStep={currentStep} />
 
           <div className="w-40 flex justify-end">
-            {currentStep.id !== "5" && (
+            {currentStep.id === "5" ? (
+              <button
+                className="inline-block no-underline text-white text-sm py-2 px-3 hover:bg-gray-500 rounded"
+                onClick={createProposal}
+              >
+                {isMinting ? "Creating..." : "Create NFT Proposal"}
+              </button>
+            ) : (
               <button
                 className="inline-block no-underline text-white text-sm py-2 px-3 hover:bg-gray-500 rounded"
                 disabled={!currentStep.nextStep}
@@ -77,7 +369,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
       <FormProvider {...methods}>
         <form>{currentStep?.formComponent}</form>
       </FormProvider>
-      {isConnected && currentStep.id !== "3" && (
+      {isConnected && currentStep.id !== "4" && (
         <div className="absolute bottom-8 right-8">
           <p className="text-sm py-2 px-3 text-white">
             Hi, {wallet?.activeAccount?.accountId}

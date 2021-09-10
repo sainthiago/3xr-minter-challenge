@@ -1,9 +1,9 @@
 import { RemoteComponent } from "@paciolan/remote-component";
-import { useRouter } from "next/router";
 import {
   Background,
   Image as ImageVR,
   StandardEnvironment,
+  useControlledProgress,
   useEnvironment,
 } from "spacesvr";
 import { Euler, Vector3 } from "three";
@@ -102,8 +102,14 @@ const assetsPlaces = [
 const PauseMenu = () => {
   const { paused, setPaused } = useEnvironment();
 
+  const progress = useControlledProgress();
+
+  const isLoading = progress < 100;
+
+  if (isLoading) return null;
+
   return (
-    <div className="w-full h-full absolute z-50 top-0 left-0">
+    <div className="w-full h-full absolute z-10 top-0 left-0">
       <div
         className={`w-full h-full relative top-0 left-0 bg-black ${
           paused ? "opacity-90" : "opacity-0"
@@ -116,17 +122,36 @@ const PauseMenu = () => {
           Enter Preview
         </div>
         <div className="font-nunito text-white text-sm p-5 rounded m-2">
-          (Press <span className="text-primary">ESC</span> to show cursor again)
+          (Press <span className="text-accent">ESC</span> to show cursor again)
         </div>
       </div>
     </div>
   );
 };
 
-const Preview = ({ nfts, skyColor }: { nfts?: any[]; skyColor: string }) => {
-  const router = useRouter();
+const LoadingScreen = () => {
+  const progress = useControlledProgress();
+
   return (
-    <StandardEnvironment loadingScreen={() => null} pauseMenu={<PauseMenu />}>
+    <>
+      {progress < 100 && (
+        <div className="w-full h-full absolute z-50 top-0 left-0 bg-primary flex flex-col items-center justify-center align-middle text-white">
+          <div className="font-nunito">Loading...</div>
+        </div>
+      )}
+    </>
+  );
+};
+
+const Preview = ({ nfts, skyColor }: { nfts?: any[]; skyColor: string }) => {
+  const progress = useControlledProgress();
+
+  if (progress < 100) return null;
+  return (
+    <StandardEnvironment
+      loadingScreen={<LoadingScreen />}
+      pauseMenu={<PauseMenu />}
+    >
       <Model>
         {nfts?.map((nft, index) => {
           return (

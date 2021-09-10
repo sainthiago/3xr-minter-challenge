@@ -3,6 +3,7 @@ import { gql } from "apollo-boost";
 import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { TNft } from "../../../constants/types/nft.type";
 import SearchResult from "./SearchResult";
 import SelectedNFTs from "./SelectedNFTs";
 
@@ -46,7 +47,7 @@ const SEARCH_VALUE = gql`
 
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
-  const [nfts, setNfts] = useState<any>([]);
+  const [nfts, setNfts] = useState<TNft[]>([]);
   const [showLimit, setShowLimit] = useState<boolean>(false);
 
   const {
@@ -75,9 +76,10 @@ const SearchBar = () => {
     }
   };
 
-  const handleSelectedValue = (elm) => {
+  const handleSelectedValue = (elm: TNft) => {
     setValue("searchKey", "");
     setSearchResult(null);
+    console.log(elm);
     if (nfts.length < 20) {
       if (!nfts.find((nft) => nft.id === elm.id)) {
         setNfts([...nfts, elm]);
@@ -88,7 +90,7 @@ const SearchBar = () => {
     }
   };
 
-  const checkIfElementIsSelected = (elm) => {
+  const checkIfElementIsSelected = (elm: TNft) => {
     return nfts.find((val) => val.id === elm.id);
   };
 
@@ -108,7 +110,7 @@ const SearchBar = () => {
       {searchResult && (
         <div className="relative z-10 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-h-52 overflow-auto">
           {searchResult.metadata.length > 0 ? (
-            searchResult.metadata.map((nft) => (
+            searchResult.metadata.map((nft: TNft) => (
               <SearchResult
                 nft={nft}
                 key={nft.id}

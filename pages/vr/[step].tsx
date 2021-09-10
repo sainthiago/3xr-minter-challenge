@@ -5,8 +5,9 @@ import GalleryNFTs from "../../components/Form/Steps/GalleryNFTs";
 import GalleryPreview from "../../components/Form/Steps/GalleryPreview";
 import GallerySummary from "../../components/Form/Steps/GallerySummary";
 import Header from "../../components/Header";
+import { TSteps } from "../../constants/types/step.type";
 
-const steps = [
+const steps: TSteps[] = [
   {
     id: "1",
     nextStep: "2",
@@ -42,13 +43,7 @@ const steps = [
     title: "Summary",
     formComponent: <GallerySummary />,
   },
-] as {
-  nextStep: string | null;
-  previousStep: string | null;
-  title: string;
-  id: string;
-  formComponent: JSX.Element | null;
-}[];
+];
 const Home = () => {
   const router = useRouter();
 

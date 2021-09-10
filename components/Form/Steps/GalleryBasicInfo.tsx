@@ -33,8 +33,12 @@ const GalleryBasicInfo = () => {
         )}
       </div>
       <div className="grid grid-cols-1 mb-8">
-        <label className="block text-xl text-white">Attach Cover Image</label>
-        <p className="text-gray-400 mb-2 mb-4 text-xs">Attach a cover image</p>
+        <label className="block text-xl text-white">
+          Attach Your Gallery Cover
+        </label>
+        <p className="text-gray-400 mb-2 mb-4 text-xs">
+          Select your awesome gallery cover
+        </p>
         <div className="w-full text-white">
           <input
             {...register("file", {
