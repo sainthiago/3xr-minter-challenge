@@ -26,3 +26,10 @@ Mintbase developers - https://www.mintbase.io/pt/developers
 GraphiQL - https://graphiql-online.com/ - w/ mintbase link: https://mintbase-mainnet.hasura.app/v1/graphql
 
 3D gallery template that i chose for my solution: https://hubs.mozilla.com/spoke/projects/new?sceneId=CzmA8a0
+
+Remote component: https://github.com/Paciolan/remote-component-starter
+
+VR spaces: https://github.com/spacesvr/spacesvr
+
+Interact with DAO: https://hackmd.io/@IAe73m74TImJ5ZmJ4HWtjw/BJJ8BdnaO
+
