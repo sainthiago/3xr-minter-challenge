@@ -69,6 +69,7 @@ const SearchBar = () => {
   }, [getValues("nfts")]);
 
   const handleSearch = (event) => {
+    setValue("searchKey", event.target.value);
     if (event.target.value.length > 0) {
       searchByValue({ variables: { value: `%${event.target.value}%` } });
     } else {
@@ -79,7 +80,6 @@ const SearchBar = () => {
   const handleSelectedValue = (elm: TNft) => {
     setValue("searchKey", "");
     setSearchResult(null);
-    console.log(elm);
     if (nfts.length < 20) {
       if (!nfts.find((nft) => nft.id === elm.id)) {
         setNfts([...nfts, elm]);
@@ -92,6 +92,10 @@ const SearchBar = () => {
 
   const checkIfElementIsSelected = (elm: TNft) => {
     return nfts.find((val) => val.id === elm.id);
+  };
+
+  const hasKeySearch = () => {
+    return !!getValues("searchKey");
   };
 
   return (
@@ -107,9 +111,13 @@ const SearchBar = () => {
           Please select at least one nft.
         </p>
       )}
-      {searchResult && (
-        <div className="relative z-10 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-h-52 overflow-auto">
-          {searchResult.metadata.length > 0 ? (
+      {searchCalled && hasKeySearch() && (
+        <div className="relative z-10 shadow appearance-none border-2 border-smoothPrimary rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline max-h-52 overflow-auto">
+          {searchLoading ? (
+            <div className="z-10 py-2 px-3 ">
+              <p className="pt-3 pb-3 text-gray-400 ">Loading... </p>
+            </div>
+          ) : searchResult && searchResult.metadata.length > 0 ? (
             searchResult.metadata.map((nft: TNft) => (
               <SearchResult
                 nft={nft}
@@ -119,14 +127,17 @@ const SearchBar = () => {
               ></SearchResult>
             ))
           ) : (
-            <div className="z-10 py-2 px-3 ">
-              <p className="pt-3 pb-3 text-white">
-                No nfts were found. Please try with another keyword.
-              </p>
-            </div>
+            !searchLoading && (
+              <div className="z-10 py-2 px-3 ">
+                <p className="pt-3 pb-3 text-gray-400 ">
+                  No nfts were found. Please try with another keyword.
+                </p>
+              </div>
+            )
           )}
         </div>
       )}
+
       <div className="mt-4">
         <SelectedNFTs
           setSearchResult={setSearchResult}
