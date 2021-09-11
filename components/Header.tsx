@@ -144,11 +144,11 @@ const Header = ({
   const nfts = getValues("nfts");
   const skyColor = getValues("skyColor");
 
-  const previous = (e) => {
+  const previous = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     router.push(currentStep.previousStep);
   };
-  const next = async (e) => {
+  const next = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const isStepValid = await trigger();
 

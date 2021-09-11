@@ -68,7 +68,7 @@ const SearchBar = () => {
     if (getValues("nfts")) setNfts(getValues("nfts"));
   }, [getValues("nfts")]);
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue("searchKey", event.target.value);
     if (event.target.value.length > 0) {
       searchByValue({ variables: { value: `%${event.target.value}%` } });
