@@ -138,7 +138,7 @@ const Header = ({
 
   const { handleSubmit, reset, trigger, getValues } = methods;
 
-  const image = getValues("file");
+  const image: any = getValues("file");
   const title = getValues("title");
   const description = getValues("description");
   const amount = getValues("galleryQtd");
