@@ -204,12 +204,15 @@ const Header = ({
     setIsMinting(true);
 
     if (!(wallet?.minter && image)) return;
-    const { data: fileUploadResult, error: fileError } =
-      await wallet.minter.uploadField(MetadataField.Media, image[0]);
 
-    if (fileError) {
-      console.error(fileError);
-      return;
+    if (image) {
+      const { data: fileUploadResult, error: fileError } =
+        await wallet.minter.uploadField(MetadataField.Media, image[0]);
+
+      if (fileError) {
+        console.error(fileError);
+        return;
+      }
     }
 
     const external_space = [
