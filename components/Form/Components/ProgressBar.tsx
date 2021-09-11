@@ -1,4 +1,4 @@
-const ProgressBar = ({ stepId }) => {
+const ProgressBar = ({ stepId }: { stepId: string }) => {
   const getStepWidth = (): string => {
     return `${(Number(stepId) / 5) * 100}%`;
   };
