@@ -203,6 +203,7 @@ const Header = ({
   const createProposal = async () => {
     setIsMinting(true);
 
+    if (!(wallet?.minter && image)) return;
     const { data: fileUploadResult, error: fileError } =
       await wallet.minter.uploadField(MetadataField.Media, image[0]);
 
