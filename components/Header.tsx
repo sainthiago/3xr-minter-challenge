@@ -12,6 +12,7 @@ import { Euler, Vector3 } from "three";
 import { Network, Chain } from "mintbase";
 import Stepper from "./Form/Components/Stepper";
 import ProgressBar from "./Form/Components/ProgressBar";
+import { TNft } from "../constants/types/nft.type";
 
 const assetsPlaces = [
   {
@@ -127,7 +128,7 @@ const Header = ({
     galleryQtd: 1,
   };
 
-  const currentStep = steps.find((step) => step.id === stepId);
+  const currentStep = steps.find((step: any) => step.id === stepId);
 
   const methods = useForm({
     shouldUnregister: false,
@@ -144,11 +145,11 @@ const Header = ({
   const nfts = getValues("nfts");
   const skyColor = getValues("skyColor");
 
-  const previous = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const previous = (e: any) => {
     e.preventDefault();
     router.push(currentStep.previousStep);
   };
-  const next = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const next = async (e: any) => {
     e.preventDefault();
     const isStepValid = await trigger();
 
@@ -156,16 +157,16 @@ const Header = ({
   };
 
   const calculateRoyalties = () => {
-    let royaltiesObj = {};
+    let royaltiesObj: any = {};
 
-    nfts.forEach((nft) => {
+    nfts.forEach((nft: TNft) => {
       const royalties = nft.thing.tokens[0].royaltys ?? [];
       const minter = nft.thing.tokens[0].minter;
 
       const hasRoyalties = royalties.length > 0;
 
       if (hasRoyalties) {
-        royalties.forEach((royalty) => {
+        royalties.forEach((royalty: any) => {
           if (royaltiesObj[royalty.account]) {
             royaltiesObj[royalty.account] += royalty.percent;
           } else {
@@ -188,7 +189,7 @@ const Header = ({
       });
     });
 
-    const beforeCutTotal = Object.values(royaltiesObj).reduce(
+    const beforeCutTotal: any = Object.values(royaltiesObj).reduce(
       (acc, curr) => Number(acc) + Number(curr)
     );
 
@@ -222,7 +223,7 @@ const Header = ({
       {
         trait_type: "gallery_nfts",
         display_type: "NFT Gallery",
-        value: nfts.map((nft) => nft.thing.id),
+        value: nfts.map((nft: TNft) => nft.thing.id),
       },
     ];
 

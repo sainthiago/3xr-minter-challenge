@@ -4,7 +4,7 @@ const SearchResult = ({
   nft,
   handleSelectedValue,
   checkIfElementIsSelected,
-}) => {
+}: any) => {
   const nftType = useTokenType(nft);
 
   return (

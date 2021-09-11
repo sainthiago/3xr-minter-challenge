@@ -20,5 +20,5 @@ export type TNft = {
       }[];
       __typename: string;
     }[];
-  }[];
+  };
 };

@@ -1,4 +1,4 @@
-const Stepper = ({ currentStep }) => {
+const Stepper = ({ currentStep }: any) => {
   return (
     <>
       <div className="w-3/6 m-auto text-center">

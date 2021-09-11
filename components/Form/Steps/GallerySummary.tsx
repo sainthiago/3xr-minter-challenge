@@ -12,6 +12,7 @@ const GallerySummary = () => {
   const amount = getValues("galleryQtd");
   const nfts = getValues("nfts");
   const skyColor = getValues("skyColor");
+  const daoAddress = getValues("daoAddress");
 
   useEffect(() => {
     if (!image || image?.length < 1) return;
@@ -27,6 +28,7 @@ const GallerySummary = () => {
         nfts={nfts}
         amount={amount}
         skyColor={skyColor}
+        daoAddress={daoAddress}
       />
     </>
   );

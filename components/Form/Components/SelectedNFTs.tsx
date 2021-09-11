@@ -4,7 +4,7 @@ import { ListManager } from "react-beautiful-dnd-grid";
 import { useFormContext } from "react-hook-form";
 import { useTokenType } from "../../../constants/protocols/tokenType";
 
-const NftCard = ({ nft, handleRemoveSelectedValue }) => {
+const NftCard = ({ nft, handleRemoveSelectedValue }: any) => {
   const nftType = useTokenType(nft);
 
   return (
@@ -41,7 +41,7 @@ const SelectedNFTs = ({
   setNfts,
   showLimit,
   setShowLimit,
-}) => {
+}: any) => {
   const {
     register,
     formState: { errors },
@@ -49,8 +49,8 @@ const SelectedNFTs = ({
     getValues,
   } = useFormContext();
 
-  const handleRemoveSelectedValue = (id) => {
-    const auxNfts = nfts.filter((nft) => nft.id !== id);
+  const handleRemoveSelectedValue = (id: any) => {
+    const auxNfts = nfts.filter((nft: any) => nft.id !== id);
     setNfts(auxNfts);
     setValue("nfts", auxNfts);
     setSearchResult(null);
@@ -59,7 +59,7 @@ const SelectedNFTs = ({
     }
   };
 
-  const reorderList = (sourceIndex, destinationIndex) => {
+  const reorderList = (sourceIndex: any, destinationIndex: any) => {
     const items = Array.from(nfts);
     const [reorderedItem] = items.splice(sourceIndex, 1);
     items.splice(destinationIndex, 0, reorderedItem);
