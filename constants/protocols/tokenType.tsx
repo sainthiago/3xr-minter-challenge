@@ -1,13 +1,15 @@
-export const useTokenType = (nft): string => {
+import { TNft } from "../types/nft.type";
+
+export const useTokenType = (nft: TNft): string => {
   if (nft.animation_type) {
-    if (nft.media_type.includes("audio")) {
+    if (nft.animation_type.includes("audio")) {
       return "Audio";
-    } else if (nft.media_type.includes("video")) {
+    } else if (nft.animation_type.includes("video")) {
       return "Video";
-    } else if (nft.media_type.includes("application")) {
+    } else if (nft.animation_type.includes("application")) {
       return "Application";
     } else {
-      return "Model";
+      return "3D Model";
     }
   } else {
     return "Image";
