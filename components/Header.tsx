@@ -1,18 +1,16 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
-import { useRouter } from "next/router";
-import { FormProvider, useForm } from "react-hook-form";
-import { useWallet } from "../services/providers/MintbaseWalletContext";
 import BN from "bn.js";
 import { Decimal } from "decimal.js";
-import { MetadataField } from "mintbase";
+import { MetadataField, Network } from "mintbase";
 import { Contract } from "near-api-js";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { Euler, Vector3 } from "three";
-
-import { Network, Chain } from "mintbase";
-import Stepper from "./Form/Components/Stepper";
-import ProgressBar from "./Form/Components/ProgressBar";
 import { TNft } from "../constants/types/nft.type";
+import { useWallet } from "../services/providers/MintbaseWalletContext";
+import ProgressBar from "./Form/Components/ProgressBar";
+import Stepper from "./Form/Components/Stepper";
 
 const assetsPlaces = [
   {
@@ -101,17 +99,7 @@ const assetsPlaces = [
   },
 ];
 
-const Header = ({
-  stepId,
-  nextStep,
-  previousStep,
-  steps,
-}: {
-  stepId: string;
-  nextStep: string | null;
-  previousStep: string | null;
-  steps: any;
-}) => {
+const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
   const router = useRouter();
   const { wallet, isConnected, details } = useWallet();
   const [isMinting, setIsMinting] = useState<boolean>(false);
