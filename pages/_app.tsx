@@ -10,11 +10,9 @@ import {
 import { useApollo } from "../services/apolloClient";
 import { WalletProvider } from "../services/providers/MintbaseWalletContext";
 
-const URL_PARAMS_TO_REDIRECT = [
-  "errorCode",
-  "errorMessage",
-  "transactionHashes",
-];
+const URL_PARAMS_TO_REDIRECT = ["errorCode", "errorMessage"];
+
+const URL_PARAM_SUCCESS = ["transactionHashes"];
 
 const URL_TO_NOT_REDIRECT = ["account_id", "public_key", "all_keys"];
 
@@ -32,19 +30,31 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const handleUrlParams = () => {
     const url = new URL(window.location.href);
+    console.log(url);
 
+    const isTransactionsSuccess = URL_PARAM_SUCCESS.find((param) => {
+      console.log(url.searchParams.get(param));
+      return !!url.searchParams.get(param);
+    });
     const isLogginIn = URL_TO_NOT_REDIRECT.find(
       (param) => !!url.searchParams.get(param)
     );
 
-    if (isLogginIn) return;
+    console.log(isTransactionsSuccess, isLogginIn);
 
-    URL_PARAMS_TO_REDIRECT.forEach((param) => {
-      url.searchParams.delete(param);
-    });
+    if (isTransactionsSuccess) {
+      router.push("/success");
+      return;
+    } else if (isLogginIn) {
+      return;
+    } else {
+      URL_PARAMS_TO_REDIRECT.forEach((param) => {
+        url.searchParams.delete(param);
+      });
 
-    window.history.pushState({}, "", url.toString());
-    router.push("/");
+      window.history.pushState({}, "", url.toString());
+      router.push("/");
+    }
   };
 
   useEffect(() => {
