@@ -33,3 +33,8 @@ VR spaces: https://github.com/spacesvr/spacesvr
 
 Interact with DAO: https://hackmd.io/@IAe73m74TImJ5ZmJ4HWtjw/BJJ8BdnaO
 
+------------
+## Live app
+
+https://3xr-minter-challenge.vercel.app/
+
