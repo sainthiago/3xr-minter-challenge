@@ -1,7 +1,6 @@
 import { ListManager } from "react-beautiful-dnd-grid";
 import { useFormContext } from "react-hook-form";
 import { useMedia } from "react-media";
-import { useEffect } from "react";
 import NftCard from "./NftCard";
 
 const SelectedNFTs = ({
@@ -15,7 +14,6 @@ const SelectedNFTs = ({
     register,
     formState: { errors },
     setValue,
-    getValues,
   } = useFormContext();
 
   const GLOBAL_MEDIA_QUERIES = {
@@ -24,18 +22,6 @@ const SelectedNFTs = ({
     large: "(min-width: 1200px)",
   };
   const matches = useMedia({ queries: GLOBAL_MEDIA_QUERIES });
-  // let gridItems = 4;
-
-  // useEffect(() => {
-  //   console.log(matches);
-  //   if (matches.small) {
-  //     gridItems = 1;
-  //   } else if (matches.medium) {
-  //     gridItems = 2;
-  //   } else {
-  //     gridItems = 4;
-  //   }
-  // }, [matches]);
 
   const handleRemoveSelectedValue = (id: any) => {
     const auxNfts = nfts.filter((nft: any) => nft.id !== id);
