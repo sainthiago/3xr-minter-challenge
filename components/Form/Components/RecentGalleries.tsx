@@ -52,7 +52,7 @@ const RecentGalleries = () => {
               >
                 <div className="p-4 w-full h-full">
                   <div className="flex justify-between">
-                    <span className="bg-smoothPrimary py-1 px-2 text-xs font-semibold text-white rounded">
+                    <span className="bg-smoothPrimary py-1 px-2 text-xs font-semibold text-white rounded truncate">
                       {gallery.metadata.title}
                     </span>
                     <span className="bg-smoothPrimary py-1 px-2 text-xs font-semibold text-white rounded">
@@ -65,12 +65,12 @@ const RecentGalleries = () => {
                     src={gallery.metadata.media}
                   />
 
-                  <h1 className="text-xs font-bold mt-2 truncate">
+                  <h1 className="text-xs font-bold h-12 mt-2 line-clamp-3">
                     {gallery.metadata.description}
                   </h1>
 
                   <a
-                    className="flex justify-center bg-gray-600 rounded p-4 text-white m-auto text-xs w-full mt-8 cursor-pointer hover:bg-accent"
+                    className="flex justify-center bg-gray-600 rounded p-4 text-white m-auto text-xs w-full mt-4 cursor-pointer hover:bg-accent"
                     href={enterTheGallery(gallery.id)}
                     target="_blank"
                   >
