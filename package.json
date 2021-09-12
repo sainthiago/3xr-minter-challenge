@@ -51,5 +51,9 @@
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4",
     "typescript": "4.3.5"
+  },
+  "resolutions": {
+    "spacesvr/**/@react-three/drei": "4.1.8",
+    "spacesvr/**/@react-three/fiber": "6.0.14"
   }
 }
