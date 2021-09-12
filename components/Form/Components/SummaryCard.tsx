@@ -4,14 +4,14 @@ const SummaryCard = (props: NFTGallery) => {
   const { imageUrl, title, description, nfts, amount, skyColor, daoAddress } =
     props;
   return (
-    <div className="p-10 grid grid-cols-1">
+    <div className="p-10 grid grid-cols-1 w-full lg:w-auto">
       <div className="lg:flex justify-center">
         <div
-          className="h-48 lg:h-auto lg:w-56 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+          className="h-48 lg:h-auto w-auto lg:w-56 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
           style={{ backgroundImage: `url(${imageUrl})` }}
           title="title"
         ></div>
-        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-smoothAccent rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-1/4 break-words">
+        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-smoothAccent rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full lg:w-1/4 break-words">
           <div className="mb-2">
             <div className="flex justify-between items-center">
               <p className="text-gray-900 font-bold text-lg mb-2">{title}</p>

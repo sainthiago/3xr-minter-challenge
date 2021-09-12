@@ -1,7 +1,7 @@
 const Stepper = ({ currentStep }: any) => {
   return (
     <>
-      <div className="w-3/6 m-auto text-center">
+      <div className="w-4/6 md:w-3/6 m-auto text-center">
         <div className="mx-4 p-4">
           <div>
             <label className="text-xs text-white font-nunito">

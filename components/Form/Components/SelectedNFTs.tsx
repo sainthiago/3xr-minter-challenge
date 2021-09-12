@@ -1,39 +1,8 @@
-import { XIcon } from "@heroicons/react/solid";
 import { ListManager } from "react-beautiful-dnd-grid";
-
 import { useFormContext } from "react-hook-form";
-import { useTokenType } from "../../../constants/protocols/tokenType";
-
-const NftCard = ({ nft, handleRemoveSelectedValue }: any) => {
-  const nftType = useTokenType(nft);
-
-  return (
-    <>
-      <div className="bg-smoothAccent rounded-xl overflow-hidden shadow-xl hover:scale-105 hover:shadow-2xl transform duration-500 cursor-pointer">
-        <div className="p-4 w-full h-full">
-          <div className="flex justify-between">
-            <span className="bg-primary py-0.5 px-1 text-xs font-semibold text-white rounded-full cursor-pointer">
-              {nftType}
-            </span>
-            <XIcon
-              className="h-5 w-5 text-gray-400 hover:text-accent cursor-pointer"
-              onClick={() => handleRemoveSelectedValue(nft.id)}
-            />
-          </div>
-
-          <img
-            className="w-full h-20 rounded object-cover mt-2"
-            src={nft.media}
-          />
-
-          <h1 className="text-xs font-bold hover:underline cursor-pointer mt-2 truncate">
-            {nft.title}
-          </h1>
-        </div>
-      </div>
-    </>
-  );
-};
+import { useMedia } from "react-media";
+import { useEffect } from "react";
+import NftCard from "./NftCard";
 
 const SelectedNFTs = ({
   setSearchResult,
@@ -48,6 +17,25 @@ const SelectedNFTs = ({
     setValue,
     getValues,
   } = useFormContext();
+
+  const GLOBAL_MEDIA_QUERIES = {
+    small: "(max-width: 599px)",
+    medium: "(min-width: 600px) and (max-width: 1199px)",
+    large: "(min-width: 1200px)",
+  };
+  const matches = useMedia({ queries: GLOBAL_MEDIA_QUERIES });
+  // let gridItems = 4;
+
+  // useEffect(() => {
+  //   console.log(matches);
+  //   if (matches.small) {
+  //     gridItems = 1;
+  //   } else if (matches.medium) {
+  //     gridItems = 2;
+  //   } else {
+  //     gridItems = 4;
+  //   }
+  // }, [matches]);
 
   const handleRemoveSelectedValue = (id: any) => {
     const auxNfts = nfts.filter((nft: any) => nft.id !== id);
@@ -90,10 +78,13 @@ const SelectedNFTs = ({
           <div className="ml-1">
             <ListManager
               items={nfts}
-              direction="horizontal"
-              maxItems={4}
+              direction={matches.small ? "vertical" : "horizontal"}
+              maxItems={matches.small ? 1 : matches.medium ? 3 : 4}
               render={(nft) => (
-                <div key={nft.id} className="w-44 ml-2 mr-2 mb-4">
+                <div
+                  key={nft.id}
+                  className="w-64 m-auto md:w-44 md:ml-2 md:mr-2 mb-4"
+                >
                   <NftCard
                     nft={nft}
                     handleRemoveSelectedValue={handleRemoveSelectedValue}

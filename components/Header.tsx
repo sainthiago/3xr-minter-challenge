@@ -322,7 +322,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
   return (
     <>
       <header className="font-nunito w-full bg-smoothPrimary">
-        <div className="container mx-auto max-w-8xl md:flex justify-between items-center">
+        <div className="container mx-auto max-w-8xl flex justify-between items-center">
           <div className="w-40 flex">
             {currentStep.id !== "1" && (
               <button
@@ -363,7 +363,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
         <form>{currentStep?.formComponent}</form>
       </FormProvider>
       {isConnected && currentStep.id !== "4" && (
-        <div className="absolute bottom-8 right-8">
+        <div className="sticky lg:absolute bottom-8 right-8 text-right">
           <p className="text-sm py-2 px-3 text-white">
             Hi, {wallet?.activeAccount?.accountId}
           </p>

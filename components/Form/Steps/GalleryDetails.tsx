@@ -9,7 +9,7 @@ const GalleryDetails = () => {
   } = useFormContext();
 
   return (
-    <div className="px-8 pt-6 pb-8 mb-4 w-3/6 m-auto ">
+    <div className="px-8 pt-6 pb-8 mb-4 w-full lg:w-3/6 m-auto ">
       <div className="mb-8">
         <label className="block text-xl text-white">NFT Gallery Quantity</label>
         <p className="text-gray-400 mb-2 mb-4 text-xs">
@@ -35,9 +35,9 @@ const GalleryDetails = () => {
           Select the gallery template
         </p>
 
-        <div className="flex">
+        <div className="flex flex-col md:flex-row">
           <input className="hidden" type="text" />
-          <label className="flex flex-col rounded border-4 border-accent cursor-pointer w-2/6 mr-16">
+          <label className="flex flex-col rounded border-4 border-accent cursor-pointer w-full md:w-2/6 mr-16 mb-4 md:mb-0">
             <img
               className="w-full h-40 object-cover"
               src={"/tree_gallery.jpeg"}
@@ -45,7 +45,7 @@ const GalleryDetails = () => {
             />
           </label>
           <input className="hidden" type="text" />
-          <label className="flex flex-col p-4 rounded border-2 border-gray-400 cursor-not-allowed w-2/6">
+          <label className="flex flex-col p-4 rounded border-2 border-gray-400 cursor-not-allowed w-full md:w-2/6 h-40">
             <span className="text-xs font-semibold uppercase text-gray-400 m-auto text-center">
               SOON
             </span>

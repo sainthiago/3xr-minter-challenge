@@ -7,7 +7,7 @@ const GalleryBasicInfo = () => {
     formState: { errors },
   } = useFormContext();
   return (
-    <div className="px-8 pt-6 pb-8 w-3/6 m-auto">
+    <div className="px-8 pt-6 pb-8 w-full lg:w-3/6 m-auto">
       <div className="mb-8">
         <label className="block text-xl text-white">Title</label>
         <p className="text-gray-400 mb-2 mb-4 text-xs">
