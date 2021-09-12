@@ -47,6 +47,7 @@ const SEARCH_VALUE = gql`
 
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
+  const [previousSearchKey, setPreviousSearchKey] = useState<any>("");
   const [nfts, setNfts] = useState<TNft[]>([]);
   const [showLimit, setShowLimit] = useState<boolean>(false);
 
@@ -59,9 +60,17 @@ const SearchBar = () => {
 
   const [
     searchByValue,
-    { called: searchCalled, loading: searchLoading, data: searchData },
+    {
+      called: searchCalled,
+      loading: searchLoading,
+      data: searchData,
+      variables,
+    },
   ] = useLazyQuery(SEARCH_VALUE, {
-    onCompleted: (searchData) => setSearchResult(searchData),
+    onCompleted: (searchData) => {
+      setPreviousSearchKey(variables?.value.split("%")[1]);
+      setSearchResult(searchData);
+    },
   });
 
   useEffect(() => {
@@ -72,6 +81,9 @@ const SearchBar = () => {
     setValue("searchKey", event.target.value);
     if (event.target.value.length > 0) {
       searchByValue({ variables: { value: `%${event.target.value}%` } });
+      if (previousSearchKey === event.target.value) {
+        setSearchResult(searchData);
+      }
     } else {
       setSearchResult(null);
     }
