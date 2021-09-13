@@ -31,7 +31,7 @@ const GALLERIES = gql`
   query MyQuery {
     thing(
       where: { memo: { _eq: "custom-3xr-gallery" } }
-      limit: 6
+      limit: 15
       order_by: { createdAt: desc }
     ) {
       id
@@ -64,7 +64,7 @@ const RecentGalleries = () => {
   return (
     <>
       <div className="pl-8 pr-8 md:pl-24 md:pr-24 bg-primary mt-8">
-        <p className="text-white mb-4">Recent Galleries</p>
+        <p className="text-white font-bold text-2xl mb-4">Recent Galleries</p>
 
         {data?.thing && (
           <>
@@ -100,8 +100,8 @@ const RecentGalleries = () => {
                         <span className="bg-smoothPrimary py-1 px-2 text-xs font-semibold text-white rounded truncate">
                           {gallery.metadata.title}
                         </span>
-                        <span className="bg-smoothPrimary py-1 px-2 text-xs font-semibold text-white rounded">
-                          {gallery.tokens_aggregate.aggregate.count}
+                        <span className="py-1 px-2 text-xs font-semibold text-smoothPrimary">
+                          Editions {gallery.tokens_aggregate.aggregate.count}
                         </span>
                       </div>
 

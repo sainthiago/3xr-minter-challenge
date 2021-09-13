@@ -39,7 +39,7 @@
     "spacesvr": "^1.8.1",
     "subscriptions-transport-ws": "^0.9.19",
     "swiper": "^7.0.5",
-    "three": "^0.132.2",
+    "three": "^0.131.0",
     "valtio": "^1.2.1",
     "yup": "^0.32.9"
   },
