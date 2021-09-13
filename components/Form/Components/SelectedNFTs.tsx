@@ -51,13 +51,12 @@ const SelectedNFTs = ({
         <div>
           <label className="block text-xl text-white">NFTs</label>
           <p className="text-gray-400 mb-2 mb-4 text-xs">
-            You can change the order that your awsome NFTs will appear in the
-            gallery{" "}
+            You can change the order in which the NFTs appear on the gallery
           </p>
           {showLimit && (
             <div>
               <p className="text-accent text-xs mt-2 mb-4">
-                Only can choose 20 nfts{" "}
+                Only can choose 20 nfts
               </p>
             </div>
           )}

@@ -240,6 +240,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
     wallet.minter.setMetadata({
       title: title,
       description: description,
+      [MetadataField.External_url]: `https://3xr.space`,
       extra: [...gallery_nfts, ...external_space, ...colors, ...asset_places],
     });
 
@@ -300,7 +301,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
               receiver_id: "vrchallenge.mintspace2.testnet",
               actions: [
                 {
-                  method_name: "mint_tokens",
+                  method_name: "nft_batch_mint",
                   args: Buffer.from(
                     JSON.stringify(mint)
                       .replaceAll('^"', "")

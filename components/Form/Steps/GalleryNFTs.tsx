@@ -6,7 +6,7 @@ const GalleryNFTs = () => {
       <div className="mb-8">
         <label className="block text-xl text-white">Search</label>
         <p className="text-gray-400 mb-2 mb-4 text-xs">
-          Pick awesome NFTs from the NEAR ecosystem
+          Pick NFTs from the NEAR ecosystem
         </p>
         <SearchBar></SearchBar>
       </div>

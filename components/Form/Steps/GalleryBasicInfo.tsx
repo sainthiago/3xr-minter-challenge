@@ -31,6 +31,7 @@ const GalleryBasicInfo = () => {
         <input
           {...register("title", { required: true })}
           className="shadow appearance-none border-2 border-smoothPrimary rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline focus:text-gray-100 focus:border-accent bg-primary h-12"
+          placeholder="Title"
         />
         {errors.title && (
           <p className="text-accent text-xs mt-2">Please add title</p>
@@ -42,6 +43,7 @@ const GalleryBasicInfo = () => {
         <input
           {...register("description", { required: true })}
           className="shadow appearance-none border-2 border-smoothPrimary rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline focus:text-gray-100 focus:border-accent bg-primary h-12"
+          placeholder="Description"
         />
         {errors.description && (
           <p className="text-accent mt-2 text-xs">Please add a description</p>
@@ -52,7 +54,7 @@ const GalleryBasicInfo = () => {
           Attach Your Gallery Cover
         </label>
         <p className="text-gray-400 mb-2 mb-4 text-xs">
-          Select your awesome gallery cover
+          Select your gallery cover
         </p>
         <div className="w-full text-white">
           <div className="flex items-center justify-center w-full">

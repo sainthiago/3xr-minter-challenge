@@ -58,7 +58,7 @@ const RecentGalleries = () => {
   const enterTheGallery = (id: string): string => {
     return `https://${
       wallet?.networkName === Network.testnet ? "testnet" : "mainnet"
-    }.3xr.space/custom/${id}`;
+    }.3xr.space/custom/${id}:vrchallenge.mintspace2.testnet`;
   };
 
   return (
@@ -70,7 +70,6 @@ const RecentGalleries = () => {
           <>
             <Swiper
               id="swiper"
-              virtual
               slidesPerView={1.2}
               spaceBetween={30}
               breakpoints={{
