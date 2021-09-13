@@ -7,7 +7,7 @@ const VR = () => {
 
   return (
     <div className="h-screen bg-primary w-full">
-      <div className="w-full h-1/2 flex items-center justify-center bg-smoothPrimary">
+      <div className="w-full h-2/6 md:h-96 flex items-center justify-center bg-smoothPrimary">
         {!isConnected && (
           <button
             className="m-auto bg-gray-600 text-white p-4 rounded text-center font-bold hover:bg-accent"

@@ -30,17 +30,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const handleUrlParams = () => {
     const url = new URL(window.location.href);
-    console.log(url);
 
     const isTransactionsSuccess = URL_PARAM_SUCCESS.find((param) => {
-      console.log(url.searchParams.get(param));
       return !!url.searchParams.get(param);
     });
     const isLogginIn = URL_TO_NOT_REDIRECT.find(
       (param) => !!url.searchParams.get(param)
     );
-
-    console.log(isTransactionsSuccess, isLogginIn);
 
     if (isTransactionsSuccess) {
       router.push("/success");

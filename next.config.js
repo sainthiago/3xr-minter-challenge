@@ -12,6 +12,7 @@ module.exports = {
       "abs.twimg.com",
     ],
   },
+  experimental: { esmExternals: true },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.resolve.alias = {
