@@ -31,7 +31,14 @@ SwiperCore.use([
 
 const YOUR_NFTS = gql`
   query MyQuery($value: String!) {
-    thing(where: { tokens: { minter: { _eq: $value } } }) {
+    thing(
+      where: {
+        _or: [
+          { tokens: { ownerId: { _eq: $value } } }
+          { tokens: { minter: { _eq: $value } } }
+        ]
+      }
+    ) {
       id
       metadata {
         media
