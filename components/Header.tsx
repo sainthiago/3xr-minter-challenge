@@ -364,7 +364,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
         <form>{currentStep?.formComponent}</form>
       </FormProvider>
       {isConnected && currentStep.id !== "4" && (
-        <div className="sticky lg:absolute bottom-8 right-8 text-right">
+        <div className="sticky md:absolute top-24 right-8 text-right">
           <p className="text-sm py-2 px-3 text-white">
             Hi, {wallet?.activeAccount?.accountId}
           </p>
