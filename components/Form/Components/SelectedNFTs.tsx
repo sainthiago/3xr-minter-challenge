@@ -73,6 +73,7 @@ const SelectedNFTs = ({
                   <NftCard
                     nft={nft}
                     handleRemoveSelectedValue={handleRemoveSelectedValue}
+                    isSelectable={false}
                   />
                 </div>
               )}

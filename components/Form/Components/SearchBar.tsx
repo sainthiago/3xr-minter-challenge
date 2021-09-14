@@ -6,6 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { TNft } from "../../../constants/types/nft.type";
 import SearchResult from "./SearchResult";
 import SelectedNFTs from "./SelectedNFTs";
+import YourNfts from "./YourNfts";
 
 const SEARCH_VALUE = gql`
   query Search($value: String!) {
@@ -48,7 +49,7 @@ const SEARCH_VALUE = gql`
 const SearchBar = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
   const [previousSearchKey, setPreviousSearchKey] = useState<any>("");
-  const [nfts, setNfts] = useState<TNft[]>([]);
+  const [nfts, setNfts] = useState<TNft[] | any[]>([]);
   const [showLimit, setShowLimit] = useState<boolean>(false);
 
   const {
@@ -112,6 +113,17 @@ const SearchBar = () => {
 
   return (
     <div>
+      <YourNfts
+        nfts={nfts}
+        setNfts={setNfts}
+        setShowLimit={setShowLimit}
+        showLimit={showLimit}
+      ></YourNfts>
+
+      <label className="block text-xl text-white">Search</label>
+      <p className="text-gray-400 mb-2 mb-4 text-xs">
+        Pick NFTs from the NEAR ecosystem
+      </p>
       <input
         {...register("searchKey")}
         className="shadow appearance-none border-2 border-smoothPrimary rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline focus:text-gray-100 focus:border-accent bg-primary h-12"

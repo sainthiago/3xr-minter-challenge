@@ -1,6 +1,6 @@
 import { TNft } from "../types/nft.type";
 
-export const useTokenType = (nft: TNft): string => {
+export const useTokenType = (nft: TNft | any): string => {
   if (nft.animation_type) {
     if (nft.animation_type.includes("audio")) {
       return "Audio";

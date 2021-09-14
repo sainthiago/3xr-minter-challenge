@@ -215,7 +215,7 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
       {
         trait_type: "gallery_nfts",
         display_type: "NFT Gallery",
-        value: nfts.map((nft: TNft) => nft.thing.id),
+        value: nfts.map((nft: TNft) => nft.thing?.id),
       },
     ];
 

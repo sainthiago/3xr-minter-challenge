@@ -23,7 +23,7 @@ const NftCard = ({ nft, handleRemoveSelectedValue }: any) => {
             src={nft.media}
           />
 
-          <h1 className="text-xs font-bold hover:underline cursor-pointer mt-2 truncate">
+          <h1 className="text-xs font-bold cursor-pointer mt-2 truncate">
             {nft.title}
           </h1>
         </div>

@@ -58,7 +58,7 @@ const RecentGalleries = () => {
   const enterTheGallery = (id: string): string => {
     return `https://${
       wallet?.networkName === Network.testnet ? "testnet" : "mainnet"
-    }.3xr.space/custom/${id}:vrchallenge.mintspace2.testnet`;
+    }.3xr.space/custom/${id}`;
   };
 
   return (
