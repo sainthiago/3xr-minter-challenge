@@ -9,7 +9,7 @@ const NftCard = ({ nft, handleRemoveSelectedValue }: any) => {
       <div className="bg-smoothAccent rounded-xl overflow-hidden shadow-xl hover:scale-105 hover:shadow-2xl transform duration-500 cursor-pointer">
         <div className="p-4 w-full h-full">
           <div className="flex justify-between">
-            <span className="bg-primary py-0.5 px-1 text-xs font-semibold text-white rounded-full cursor-pointer">
+            <span className="bg-primary py-1 px-2 text-xs font-semibold text-white rounded-full cursor-pointer">
               {nftType}
             </span>
             <XIcon

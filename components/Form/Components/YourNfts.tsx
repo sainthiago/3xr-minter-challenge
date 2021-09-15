@@ -50,11 +50,32 @@ const YOUR_NFTS = gql`
   }
 `;
 
+const IS_OWNER_CREATOR = gql`
+  query MyQuery($value: String!) {
+    token(
+      where: {
+        _or: [{ ownerId: { _eq: $value } }, { minter: { _eq: $value } }]
+      }
+      distinct_on: thingId
+    ) {
+      thing {
+        id
+      }
+      minter
+      ownerId
+    }
+  }
+`;
+
 const YourNfts = ({ nfts, setNfts, showLimit, setShowLimit }: any) => {
-  const { isConnected, wallet } = useWallet();
+  const { wallet } = useWallet();
   const { setValue } = useFormContext();
 
-  const { loading, error, data } = useQuery(YOUR_NFTS, {
+  const { data } = useQuery(YOUR_NFTS, {
+    variables: { value: wallet?.activeAccount?.accountId },
+  });
+
+  const { data: owner_nfts } = useQuery(IS_OWNER_CREATOR, {
     variables: { value: wallet?.activeAccount?.accountId },
   });
 
@@ -93,6 +114,15 @@ const YourNfts = ({ nfts, setNfts, showLimit, setShowLimit }: any) => {
       };
     });
   }
+
+  const handleIsOwnerCreator = (id: string) => {
+    if (owner_nfts && owner_nfts.token.length > 0) {
+      return owner_nfts.token.find((nft: any) => nft.thing.id === id)
+        .ownerId === wallet?.activeAccount?.accountId
+        ? "Owner"
+        : "Creator";
+    }
+  };
 
   return (
     <>
@@ -133,15 +163,18 @@ const YourNfts = ({ nfts, setNfts, showLimit, setShowLimit }: any) => {
                     hasNft(nft.id)
                       ? "bg-smoothAccent border-4 rounded border-accent"
                       : "bg-gray-300"
-                  } rounded-xl overflow-hidden shadow-xl hover:bg-smoothAccent cursor-pointer`}
+                  } rounded-xl overflow-hidden shadow-xl hover:bg-smoothAccent hover:border-accent cursor-pointer border-4 border-gray-300`}
                 >
                   <div
                     className="p-4 w-full h-full"
                     onClick={() => handleSelectedValue(nft)}
                   >
                     <div className="flex justify-between">
-                      <span className="bg-primary py-0.5 px-1 text-xs font-semibold text-white rounded-full cursor-pointer">
+                      <span className="bg-primary py-1 px-2 text-xs font-semibold text-white rounded-full cursor-pointer">
                         {useTokenType(nft)}
+                      </span>
+                      <span className="py-1 px-2 text-xs font-semibold text-smoothPrimary">
+                        {handleIsOwnerCreator(nft.id)}
                       </span>
                     </div>
 
