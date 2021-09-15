@@ -59,20 +59,20 @@ const YourNfts = ({ nfts, setNfts, showLimit, setShowLimit }: any) => {
   });
 
   const handleSelectedValue = (elm: any) => {
-    if (nfts.length < 20) {
-      if (!nfts.find((nft: any) => nft.id === elm.id)) {
+    if (!nfts.find((nft: any) => nft.id === elm.id)) {
+      if (nfts.length < 20) {
         setNfts([...nfts, elm]);
         setValue("nfts", [...nfts, elm]);
       } else {
-        const auxNfts = nfts.filter((nft: any) => nft.id !== elm.id);
-        setNfts(auxNfts);
-        setValue("nfts", auxNfts);
-        if (auxNfts.length < 20 && showLimit) {
-          setShowLimit(false);
-        }
+        setShowLimit(true);
       }
     } else {
-      setShowLimit(true);
+      const auxNfts = nfts.filter((nft: any) => nft.id !== elm.id);
+      setNfts(auxNfts);
+      setValue("nfts", auxNfts);
+      if (auxNfts.length < 20 && showLimit) {
+        setShowLimit(false);
+      }
     }
   };
 
