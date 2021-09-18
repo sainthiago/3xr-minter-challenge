@@ -155,17 +155,21 @@ const Header = ({ stepId, steps }: { stepId: string; steps: any }) => {
 
       if (hasRoyalties) {
         royalties.forEach((royalty: any) => {
-          if (royaltiesObj[royalty.account]) {
-            royaltiesObj[royalty.account] += royalty.percent;
-          } else {
-            royaltiesObj[royalty.account] = royalty.percent;
+          if (royalty.account !== "vr-challenge.testnet") {
+            if (royaltiesObj[royalty.account]) {
+              royaltiesObj[royalty.account] += royalty.percent;
+            } else {
+              royaltiesObj[royalty.account] = royalty.percent;
+            }
           }
         });
       } else {
-        if (royaltiesObj[minter]) {
-          royaltiesObj[minter] += 100;
-        } else {
-          royaltiesObj[minter] = 100;
+        if (minter !== "vr-challenge.testnet") {
+          if (royaltiesObj[minter]) {
+            royaltiesObj[minter] += 100;
+          } else {
+            royaltiesObj[minter] = 100;
+          }
         }
       }
 
