@@ -15,9 +15,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useTokenType } from "../../../constants/protocols/tokenType";
-import { TNft } from "../../../constants/types/nft.type";
 import { useWallet } from "../../../services/providers/MintbaseWalletContext";
-import NftCard from "./NftCard";
 
 // install Swiper modules
 SwiperCore.use([
@@ -45,6 +43,18 @@ const YOUR_NFTS = gql`
         title
         animation_type
         media_type
+        thing {
+          id
+          memo
+          tokens(limit: 1) {
+            minter
+            royaltyPercent
+            royaltys {
+              account
+              percent
+            }
+          }
+        }
       }
     }
   }
@@ -105,12 +115,15 @@ const YourNfts = ({ nfts, setNfts, showLimit, setShowLimit }: any) => {
 
   if (data && data.thing.length > 0) {
     yourNftsFinal = data.thing.map((nft: any) => {
+      const { id, metadata } = nft;
       return {
-        id: nft.id,
-        media: nft.metadata.media,
-        animation_type: nft.metadata.animation_type,
-        media_type: nft.metadata.media_type,
-        title: nft.metadata.title,
+        animation_type: metadata.animation_type,
+        description: metadata.description,
+        id,
+        media: metadata.media,
+        media_type: metadata.media_type,
+        title: metadata.title,
+        thing: metadata.thing,
       };
     });
   }
