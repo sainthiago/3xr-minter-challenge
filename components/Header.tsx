@@ -12,89 +12,89 @@ import { useWallet } from "../services/providers/MintbaseWalletContext";
 import ProgressBar from "./Form/Components/ProgressBar";
 import Stepper from "./Form/Components/Stepper";
 
-const assetsPlaces = [
+const assetPlaces = [
   {
-    position: new Vector3(-5.6, 1.5, 5),
+    position: new Vector3(-5.6, 1.35, 5),
     rotation: new Euler(0, Math.PI / 2, 0),
   },
   {
-    position: new Vector3(-5.6, 1.5, 3),
+    position: new Vector3(-5.6, 1.35, 3),
     rotation: new Euler(0, Math.PI / 2, 0),
   },
   {
-    position: new Vector3(-5.6, 1.5, 1),
+    position: new Vector3(-5.6, 1.35, 1),
     rotation: new Euler(0, Math.PI / 2, 0),
   },
   {
-    position: new Vector3(-5.6, 1.5, -1),
+    position: new Vector3(-5.6, 1.35, -1),
     rotation: new Euler(0, Math.PI / 2, 0),
   },
   {
-    position: new Vector3(-5.6, 1.5, -3),
+    position: new Vector3(-5.6, 1.35, -3),
     rotation: new Euler(0, Math.PI / 2, 0),
   },
   {
-    position: new Vector3(5, 1.5, 6.65),
+    position: new Vector3(5, 1.35, 6.65),
     rotation: new Euler(0, Math.PI, 0),
   },
   {
-    position: new Vector3(3, 1.5, 6.65),
+    position: new Vector3(3, 1.35, 6.65),
     rotation: new Euler(0, Math.PI, 0),
   },
   {
-    position: new Vector3(1, 1.5, 6.65),
+    position: new Vector3(1, 1.35, 6.65),
     rotation: new Euler(0, Math.PI, 0),
   },
   {
-    position: new Vector3(-1, 1.5, 6.65),
+    position: new Vector3(-1, 1.35, 6.65),
     rotation: new Euler(0, Math.PI, 0),
   },
   {
-    position: new Vector3(-3, 1.5, 6.65),
+    position: new Vector3(-3, 1.35, 6.65),
     rotation: new Euler(0, Math.PI, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, -6),
+    position: new Vector3(8.3, 1.35, -6),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, -4),
+    position: new Vector3(8.3, 1.35, -4),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, -2),
+    position: new Vector3(8.3, 1.35, -2),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, 0),
+    position: new Vector3(8.3, 1.35, 0),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, 2),
+    position: new Vector3(8.3, 1.35, 2),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(8.3, 1.5, 0),
+    position: new Vector3(8.3, 1.35, 0),
     rotation: new Euler(0, -Math.PI / 2, 0),
   },
   {
-    position: new Vector3(-3, 1.5, -7.2),
+    position: new Vector3(-3, 1.35, -7.2),
     rotation: new Euler(0, 0, 0),
   },
   {
-    position: new Vector3(-1, 1.5, -7.2),
+    position: new Vector3(-1, 1.35, -7.2),
     rotation: new Euler(0, 0, 0),
   },
   {
-    position: new Vector3(2, 1.5, -7.2),
+    position: new Vector3(2, 1.35, -7.2),
     rotation: new Euler(0, 0, 0),
   },
   {
-    position: new Vector3(4, 1.5, -7.2),
+    position: new Vector3(4, 1.35, -7.2),
     rotation: new Euler(0, 0, 0),
   },
   {
-    position: new Vector3(6, 1.5, -7.2),
+    position: new Vector3(6, 1.35, -7.2),
     rotation: new Euler(0, 0, 0),
   },
 ];
